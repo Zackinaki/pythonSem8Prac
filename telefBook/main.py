@@ -1,3 +1,19 @@
+# Задача №49. Решение в группах
+# Создать телефонный справочник с
+# возможностью импорта и экспорта данных в
+# формате .txt. Фамилия, имя, отчество, номер
+# телефона - данные, которые должны находиться
+# в файле.
+# 1. Программа должна выводить данные
+# 2. Программа должна сохранять данные в
+# текстовом файле
+# 3. Пользователь может ввести одну из
+# характеристик для поиска определенной
+# записи(Например имя или фамилию
+# человека)
+# 4. Использование функций. Ваша программа
+# не должна быть линейной
+
 from os import path
 import re
 
@@ -43,12 +59,28 @@ def add_new_contact():
 
 def search():
     global all_data, id
-    name = input('Vvedite dannie dla poiska: ')
-    for str in all_data:
-        if name in str:
-            print(str)
-        else:
-            print('Net sovpadenii')
+    name = exist_contact(0,input('Vvedite dannie dla poiska: '))
+
+    if name:
+        print(*name,sep="\n")
+    else:
+        print('Net sovpadenii')
+
+
+
+
+def exist_contact(rec_id, data):
+    """Проверка записи в базе
+
+    :type data: проверка записи
+    :type rec_id: проверка id
+    """
+
+    if rec_id:
+        candidates = [i for i in all_data if rec_id in i[0]]
+    else:
+        candidates = [i for i in all_data if data in i]
+    return candidates
 
 
 def delete():
